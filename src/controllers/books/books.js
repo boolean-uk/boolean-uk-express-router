@@ -23,7 +23,7 @@ const addBook = (req, res) => {
 
     getAllBooks().push(newBook)
     res.status(201).json({
-        books: newBook
+        book: newBook
     })
 }
 
