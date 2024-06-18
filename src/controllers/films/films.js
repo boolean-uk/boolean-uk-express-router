@@ -1,5 +1,5 @@
 const { deletedFilms } = require('../../../data/deletedData.js')
-const {getAllFilms, getFilmByID} = require('../../domain/films/films.js')
+const {getAllFilms, getFilmByID, getFilmByDirector} = require('../../domain/films/films.js')
 const newID = require('../../functions/createID.js')
 
 let newFilm = {
@@ -49,10 +49,36 @@ const updateFilm = (req, res) => {
     const id = Number(req.params.id)
     const found = getFilmByID(id)
 
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Film not found")
+    }
+
     found.title = req.body.title
     found.director = req.body.director
+
+    if (
+        found.title === "" ||
+        found.director === ""
+    ) {
+        throw new FieldMissing("Missing fields")
+    }
+
     res.status(200).json({
         film: found
+    })
+}
+
+const filterByDirector = (req, res) => {
+    const director = req.query.director
+    
+    const found = getFilmByDirector(director)
+    
+    res.status(200).json({
+        films: found
     })
 }
 
@@ -61,5 +87,6 @@ module.exports = {
     addFilm,
     getByID,
     removeFIlm,
-    updateFilm
+    updateFilm,
+    filterByDirector
 }

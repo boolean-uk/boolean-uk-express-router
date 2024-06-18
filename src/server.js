@@ -33,13 +33,13 @@ app.use((error, req, res, next) => {
         })
     }
 
-    if(error instanceof BookAlreadyExistsError) {
+    if(error instanceof AlreadyExistsError) {
         return res.status(409).json({
             message: error.message
         })
     }
 
-    if(error instanceof BookFieldMissing) {
+    if(error instanceof FieldMissing) {
         return res.status(400).json({
             message: error.message
         })

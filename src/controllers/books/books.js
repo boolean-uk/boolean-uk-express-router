@@ -26,13 +26,13 @@ const addBook = (req, res) => {
         found.type === "" ||
         found.author === ""
     ) {
-        throw new BookFieldMissing("Missing fields")
+        throw new FieldMissing("Missing fields")
     }
 
     const checkTitle = filterByTitle(found.title)
 
     if(checkTitle) {
-        throw new BookAlreadyExistsError("Book already exists")
+        throw new AlreadyExistsError("Book already exists")
     }
 
     getAllBooks().push(newBook)

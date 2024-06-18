@@ -6,10 +6,10 @@ class InvalidDataError extends Error {
 
 }
 
-class BookAlreadyExistsError extends Error {
+class AlreadyExistsError extends Error {
 
 }
 
-class BookFieldMissing extends Error {
+class FieldMissing extends Error {
 
 }
