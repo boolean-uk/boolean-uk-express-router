@@ -69,25 +69,6 @@ function getFilmByDirector(req, res) {
   res.status(200).json({ films: filteredFilms });
 }
 
-function patchFilmById(req, res) {
-  const filmId = Number(req.params.id);
-  const updatedParameters = req.body;
-  if (!updatedParameters.title && !updatedParameters.director) {
-    throw new MissingFieldsError("Missing fields in request body");
-  }
-  const film = films.find((film) => film.id === filmId);
-  if (!film) {
-    throw new DataNotFoundError("A film with provided ID does not exist");
-  }
-  if (films.find((film) => film.title === updatedParameters.title)) {
-    throw new DataAlreadyExistsError(
-      "A film with the provided title already exists"
-    );
-  }
-  Object.assign(film, updatedParameters);
-  res.status(200).json({ film });
-}
-
 module.exports = {
   getAllFilms,
   createFilm,
@@ -95,5 +76,4 @@ module.exports = {
   deleteFilmById,
   updateFilmById,
   getFilmByDirector,
-  patchFilmById,
 };

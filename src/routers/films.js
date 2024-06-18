@@ -7,7 +7,6 @@ const {
   deleteFilmById,
   updateFilmById,
   getFilmByDirector,
-  patchFilmById
 } = require("../controllers/filmsControllers.js");
 
 filmsRouter.get("/", (req, res) => {
@@ -21,6 +20,6 @@ filmsRouter.post("/", createFilm);
 filmsRouter.get("/:id", getFilmById);
 filmsRouter.delete("/:id", deleteFilmById);
 filmsRouter.put("/:id", updateFilmById);
-filmsRouter.patch("/:id", patchFilmById)
+filmsRouter.patch("/:id", updateFilmById);
 
 module.exports = filmsRouter;
