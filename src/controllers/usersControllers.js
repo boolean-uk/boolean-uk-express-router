@@ -1,6 +1,7 @@
 const data = require("../../data/index.js");
 const users = data.users;
 let idCounter = 4
+const { MissingFieldsError, DataAlreadyExistsError } = require("../errors/errors.js")
 
 function getAllUsers(req, res) {
   res.status(200).json({ users });
@@ -8,6 +9,13 @@ function getAllUsers(req, res) {
 
 function createUser(req, res) {
     const newUser = req.body
+    if (!newUser.email) {
+        throw new MissingFieldsError('Missing fields in request body')
+    }
+    if (users.find((user) => user.email === newUser.email)) {
+        throw new DataAlreadyExistsError('A user with the provided email already exists')
+    }
+
     newUser.id = idCounter
     users.push(newUser)
     idCounter++

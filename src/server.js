@@ -20,4 +20,26 @@ app.use("/users", usersRouter)
 app.use("/films", filmsRouter)
 app.use("/books", booksRouter)
 
+// ADD ERRORS
+const { MissingFieldsError, DataAlreadyExistsError } = require("./errors/errors.js")
+
+app.use((error, req, res, next) => {
+    console.log(error)
+    if (error instanceof MissingFieldsError) {
+        return res.status(400).json({
+            error: error.message
+         })
+    }
+
+    if (error instanceof DataAlreadyExistsError) {
+        return res.status(409).json({
+            error: error.message
+         })
+    }
+
+    res.status(500).json({
+        message: 'Something went wrong'
+    })
+})
+
 module.exports = app
