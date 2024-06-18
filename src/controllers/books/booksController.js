@@ -1,4 +1,4 @@
-const { getAllBooks, newBook, getBookById, deleteBookById, updateBookById } = require("../../domain/books/booksRepository")
+const { getAllBooks, newBook, getBookById, deleteBookById, updateBookById, patchBookById } = require("../../domain/books/booksRepository")
 
 let idCounter = 5
 
@@ -46,10 +46,22 @@ const updateBook = (req, res) => {
     res.json({book: newBookInfo})
 }
 
+const update = (req, res) => {
+    const newBookInfo = req.body
+    const bookID = Number(req.params.id)
+
+    newBookInfo.id = bookID
+
+    const patchedBook = patchBookById(bookID, newBookInfo)
+
+    res.json({book: patchedBook})
+}
+
 module.exports = {
     getAll,
     createBook,
     findBook,
     deleteBook,
-    updateBook
+    updateBook,
+    update
 }

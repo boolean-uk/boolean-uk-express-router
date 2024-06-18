@@ -5,7 +5,6 @@ const NotFoundError = require("../../errors/notFoundError.js")
 
 function getAllFilms(director) {
     if (director) {
-        console.log(director)
         const filteredFilms = films.filter((film) => film.director === director)
         return filteredFilms
     }

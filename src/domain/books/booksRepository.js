@@ -43,7 +43,7 @@ function updateBookById(id, updatedBook) {
     if (!verifyBookProperties(updatedBook)) {
         throw new MissingFieldsError('Missing fields in request body')
     }
-    
+
     const found = getBookById(id)
 
     if (!found) {
@@ -55,6 +55,23 @@ function updateBookById(id, updatedBook) {
     }
 
     Object.assign(books, updatedBook)
+}
+
+function patchBookById(id, updatedBook) {
+    const found = books.find((book) => book.id === id)
+    const foundIndex = books.indexOf(found)
+
+    if (!found) {
+        throw new NotFoundError('A book the provided ID does not exist')
+    }
+
+    if (verifyBook(updatedBook)) {
+        throw new AlreadyExistsError('A book with the provided title already exists')
+    }
+
+    Object.assign(books[foundIndex], updatedBook)
+
+    return books[foundIndex]
 }
 
 function verifyBookProperties(object) {
@@ -84,5 +101,6 @@ module.exports = {
     newBook,
     getBookById,
     deleteBookById,
-    updateBookById
+    updateBookById,
+    patchBookById
 }
