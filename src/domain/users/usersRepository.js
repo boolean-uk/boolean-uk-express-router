@@ -1,4 +1,4 @@
-let { users } = require("../../../data/index")
+let { users } = require("../../../data/index.js")
 
 function getAllUsers() {
     return users
