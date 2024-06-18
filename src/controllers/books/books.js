@@ -48,9 +48,23 @@ const removeBook = (req, res) => {
     })
 }
 
+const updateBook = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getBookByID(id)
+
+    found.title = req.body.title
+    found.type = req.body.type
+    found.author = req.body.author
+
+    res.status(200).json({
+        book: found
+    })
+}
+
 module.exports = {
     getBooks,
     addBook,
     getByID,
-    removeBook
+    removeBook,
+    updateBook
 }
