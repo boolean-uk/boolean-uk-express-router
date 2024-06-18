@@ -70,7 +70,7 @@ describe("Books Extension Endpoint", () => {
 
   describe("PATCH /books", () => {
     it("will return 404 when updating a book that does not exist", async () => {
-        const response = await supertest(app).put("/books/999").send({
+        const response = await supertest(app).patch("/books/999").send({
             title: "test1",
             type: "test1",
             author: "test1",
@@ -80,7 +80,7 @@ describe("Books Extension Endpoint", () => {
         expect(response.body.error).toEqual('A book the provided ID does not exist')
     })
     it("will return 409 when updating a book with title that already exists", async () => {
-        const response = await supertest(app).put("/books/1").send({
+        const response = await supertest(app).patch("/books/1").send({
             title: "1984",
             type: "test1",
             author: "test1",
