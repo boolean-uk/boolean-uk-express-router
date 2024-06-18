@@ -3,6 +3,14 @@ const { getAllFilms, newFilm, getFilmById, deleteFilmById, updateFilmById } = re
 let idCounter = 5
 
 const getAll = (req, res) => {
+    const director = req.query.director
+
+    if (director) {
+       const filteredFilms = getAllFilms(director)
+
+       return res.json({films: filteredFilms})
+    }
+
     const films = getAllFilms()
 
     res.json({films})

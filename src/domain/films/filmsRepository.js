@@ -3,7 +3,13 @@ const AlreadyExistsError = require("../../errors/alreadyExistsError.js")
 const MissingFieldsError = require("../../errors/missingFieldsError.js")
 const NotFoundError = require("../../errors/notFoundError.js")
 
-function getAllFilms() {
+function getAllFilms(director) {
+    if (director) {
+        console.log(director)
+        const filteredFilms = films.filter((film) => film.director === director)
+        return filteredFilms
+    }
+
     return films
 }
 
