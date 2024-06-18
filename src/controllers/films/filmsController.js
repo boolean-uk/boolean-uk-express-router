@@ -1,6 +1,5 @@
 const { getAllFilms, newFilm, getFilmById, deleteFilmById, updateFilmById } = require("../../domain/films/filmsRepository")
 
-
 let idCounter = 5
 
 const getAll = (req, res) => {

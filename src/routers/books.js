@@ -1,4 +1,16 @@
-// Import data here...
+const express = require('express')
+const { getAll, createBook, findBook, deleteBook, updateBook } = require('../controllers/books/booksController')
 
+const router = express.Router()
 
-// Write routes here...
+router.get('/', getAll)
+
+router.post('/', createBook)
+
+router.get('/:id', findBook)
+
+router.delete('/:id', deleteBook)
+
+router.put('/:id', updateBook)
+
+module.exports = router
