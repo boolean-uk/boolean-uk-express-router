@@ -1,44 +1,46 @@
-const {
-	getAllBks,
-	createNewBk,
-	getBkById,
-	deleteBk,
-	updateBkById,
-} = require("../domain/booksRep.js")
+const booksData = require("../../data/index.js")
+const books = booksData.books
+
+let newBookId = books.length + 1
 
 const getAllBooks = (req, res) => {
-	const users = getAllBks()
-
-	res.status(200).json({ books })
+	res.status(200).json({ books: books })
 }
 
 const createNewBook = (req, res) => {
-	const newBook = createNewBk(req.body)
-	res.status(201).json({ newBook })
+	const newBook = req.body
+	newBook.id = newBookId
+	newBookId += 1
+	books.push(newBook)
+	res.status(201).json({ book: newBook })
 }
 
 const getBookById = (req, res) => {
-	const foundBook = getUsrById(Number(req.params.id))
-	res.status(200).json({ foundBook })
+	const bookId = Number(req.params.id)
+	const foundBook = books.find((b) => b.id === bookId)
+	res.status(200).json({ book: foundBook })
 }
 
-const deleteBook = (req, res) => {
-	const book = deleteBk(Number(req.params.id))
-	res.status(200).json({ book })
+const deleteBookById = (req, res) => {
+	const bookId = Number(req.params.id)
+	const bookToDelete = books.find((b) => b.id === bookId)
+	const indexToDelete = books.indexOf(bookToDelete)
+	books.splice(indexToDelete, 1)
+	res.status(200).json({ book: bookToDelete })
 }
 
 const updateBookById = (req, res) => {
 	const bookId = Number(req.params.id)
-	const data = req.body
-
-	const updateBook = updateBkById
-	res.status(200).json({ updateUser })
+	const updateBook = req.body
+	updateBook.id = bookId
+	books.splice(bookId - 1, 1, updateBook)
+	res.status(200).json({ book: updateBook })
 }
 
 module.exports = {
 	getAllBooks,
 	createNewBook,
 	getBookById,
-	deleteBook,
+	deleteBookById,
 	updateBookById,
 }

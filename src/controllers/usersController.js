@@ -4,7 +4,7 @@ const users = usersData.users
 let newUserId = users.length + 1
 
 const getAllUsers = (req, res) => {
-	res.status(200).json({ users })
+	res.status(200).json({ users: users })
 }
 
 const createNewUser = (req, res) => {
