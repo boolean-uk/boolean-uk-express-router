@@ -49,16 +49,24 @@ function deleteFilmById(req, res) {
 
 function updateFilmById(req, res) {
   const updatedParameters = req.body;
+  if (films.find((film) => film.title === updatedParameters.title)) {
+    throw new DataAlreadyExistsError(
+      "A film with the provided title already exists"
+    );
+  }
   const filmId = Number(req.params.id);
   const film = films.find((film) => film.id === filmId);
+  if (!film) {
+    throw new DataNotFoundError("A film with provided ID does not exist");
+  }
   Object.assign(film, updatedParameters);
   res.status(200).json({ film });
 }
 
 function getFilmByDirector(req, res) {
   const director = req.query.director;
-  const filteredFilms = films.filter((film) => film.director === director)
-  res.status(200).json({ films: filteredFilms })
+  const filteredFilms = films.filter((film) => film.director === director);
+  res.status(200).json({ films: filteredFilms });
 }
 
 module.exports = {
