@@ -1,8 +1,10 @@
 const express = require('express')
 const booksRouter = express.Router()
-const { getAllBooks } = require('../controllers/booksControllers.js')
+const { getAllBooks, createBook, getBookById } = require('../controllers/booksControllers.js')
 
 
 booksRouter.get("/", getAllBooks)
+booksRouter.post("/", createBook)
+booksRouter.get("/:id", getBookById)
 
 module.exports = booksRouter
