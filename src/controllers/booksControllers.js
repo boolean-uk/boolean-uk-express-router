@@ -18,4 +18,20 @@ function getBookById(req, res) {
     res.status(200).json({ book })
 }
 
-module.exports = { getAllBooks, createBook, getBookById };
+function deleteBookById(req, res) {
+    const bookId = Number(req.params.id)
+    const book = books.find((book) => book.id === bookId)
+    const index = books.indexOf(book)
+    books.splice(index, 1)
+    res.status(200).json({ book })
+}
+
+function updateBookById(req, res) {
+    const updatedParams = req.body
+    const bookId = Number(req.params.id)
+    const book = books.find((book) => book.id === bookId)
+    Object.assign(book, updatedParams)
+    res.status(200).json({ book })
+}
+
+module.exports = { getAllBooks, createBook, getBookById, deleteBookById, updateBookById };
