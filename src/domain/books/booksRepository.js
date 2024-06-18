@@ -1,4 +1,5 @@
 let { books } = require("../../../data/index.js")
+const AlreadyExistsError = require("../../errors/alreadyExistsError.js")
 const MissingFieldsError = require("../../errors/missingFieldsError.js")
 const NotFoundError = require("../../errors/notFoundError.js")
 
@@ -9,6 +10,10 @@ function getAllBooks() {
 function newBook(book) {
     if (!verifyBookProperties(book)) {
         throw new MissingFieldsError('Missing fields in request body')
+    }
+
+    if (verifyBook(book)) {
+        throw new AlreadyExistsError('A book with the provided title already exists')
     }
 
     books.push(book)
@@ -35,14 +40,18 @@ function deleteBookById(id) {
 }
 
 function updateBookById(id, updatedBook) {
+    if (!verifyBookProperties(updatedBook)) {
+        throw new MissingFieldsError('Missing fields in request body')
+    }
+    
     const found = getBookById(id)
 
     if (!found) {
         throw new NotFoundError('A book the provided ID does not exist')
     }
 
-    if (!verifyBookProperties(updatedBook)) {
-        throw new MissingFieldsError('Missing fields in request body')
+    if (verifyBook(updatedBook)) {
+        throw new AlreadyExistsError('A book with the provided title already exists')
     }
 
     Object.assign(books, updatedBook)
@@ -59,6 +68,16 @@ function verifyBookProperties(object) {
 
     return true
 }
+
+function verifyBook(object) {
+    const foundBook = books.find((book) => book.title === object.title)
+
+    if (foundBook) {
+        return true
+    }
+
+    return false
+} 
 
 module.exports = {
     getAllBooks,

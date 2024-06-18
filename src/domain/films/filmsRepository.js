@@ -1,4 +1,5 @@
 let { films } = require("../../../data/index.js")
+const AlreadyExistsError = require("../../errors/alreadyExistsError.js")
 const MissingFieldsError = require("../../errors/missingFieldsError.js")
 const NotFoundError = require("../../errors/notFoundError.js")
 
@@ -9,6 +10,10 @@ function getAllFilms() {
 function newFilm(film) {
     if (!verifyFilmProperties(film)) {
         throw new MissingFieldsError('Missing fields in request body')
+    }
+
+    if (verifyFilm(film)) {
+        throw new AlreadyExistsError('A film with the provided title already exists')
     }
 
     films.push(film)
@@ -45,6 +50,10 @@ function updateFilmById(id, updatedFilm) {
         throw new MissingFieldsError('Missing fields in request body')
     }
 
+    if (verifyFilm(updatedFilm)) {
+        throw new AlreadyExistsError('A film with the provided title already exists')
+    }
+
     Object.assign(films, updatedFilm)
 }
 
@@ -59,6 +68,16 @@ function verifyFilmProperties(object) {
 
     return true
 }
+
+function verifyFilm(object) {
+    const foundFilm = films.find((film) => film.title === object.title)
+
+    if (foundFilm) {
+        return true
+    }
+
+    return false
+}  
 
 module.exports = {
     getAllFilms,
