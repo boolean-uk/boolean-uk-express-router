@@ -28,6 +28,14 @@ const getByID = (req, res) => {
     const id = Number(req.params.id)
     const found = getUserById(id)
 
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Book not found")
+    }
+
     res.status(200).json({
         user: found
     })
@@ -36,6 +44,14 @@ const getByID = (req, res) => {
 const removeUser = (req, res) => {
     const id = Number(req.params.id)
     const found = getUserById(id)
+
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Book not found")
+    }
 
     deletedUsers.push(found)
     const index = getAllUsers().indexOf(found)
