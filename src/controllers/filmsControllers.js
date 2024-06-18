@@ -24,6 +24,9 @@ function createFilm(req, res) {
 function getFilmById(req, res) {
   const filmId = Number(req.params.id);
   const film = films.find((film) => film.id === filmId);
+  if (!film) {
+    throw new DataNotFoundError('A film with provided ID does not exist')
+  }
   res.status(200).json({ film });
 }
 
