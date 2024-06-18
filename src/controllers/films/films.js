@@ -1,5 +1,5 @@
 const { deletedFilms } = require('../../../data/deletedData.js')
-const {getAllFilms, getFilmByID, getFilmByDirector} = require('../../domain/films/films.js')
+const {getAllFilms, getFilmByID, getFilmByDirector, getFilmByTitle} = require('../../domain/films/films.js')
 const newID = require('../../functions/createID.js')
 
 let newFilm = {
@@ -36,6 +36,14 @@ const getByID = (req, res) => {
 const removeFIlm = (req, res) => {
     const id = Number(req.params.id)
     const found = getFilmByID(id)
+    
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Film not found")
+    }
 
     deletedFilms.push(found)
     const index = getAllFilms().indexOf(found)
@@ -60,11 +68,8 @@ const updateFilm = (req, res) => {
     found.title = req.body.title
     found.director = req.body.director
 
-    if (
-        found.title === "" ||
-        found.director === ""
-    ) {
-        throw new FieldMissing("Missing fields")
+    if (getFilmByTitle(req.body.title)) {
+        throw new AlreadyExistsError("Film already exists")
     }
 
     res.status(200).json({

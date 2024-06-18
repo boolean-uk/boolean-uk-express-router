@@ -21,13 +21,6 @@ const addBook = (req, res) => {
     newBook.type = req.body.type
     newBook.author = req.body.author
 
-    if (
-        found.title === "" ||
-        found.type === "" ||
-        found.author === ""
-    ) {
-        throw new FieldMissing("Missing fields")
-    }
 
     const checkTitle = filterByTitle(found.title)
 

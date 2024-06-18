@@ -14,8 +14,13 @@ const getFilmByDirector = (d) => {
     return getAllFilms().filter((f) => f.director === d)
 }
 
+const getFilmByTitle = (t) => {
+    return getAllFilms().find((f) => f.title === t)
+}
+
 module.exports = {
     getAllFilms,
     getFilmByID,
-    getFilmByDirector
+    getFilmByDirector,
+    getFilmByTitle
 }
