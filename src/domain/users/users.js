@@ -9,7 +9,12 @@ const getUserById = (id) => {
     return getAllUsers().find((u) => u.id === id)
 }
 
+const filterUserEmails = (email) => {
+    return getAllUsers().find((u) => u.email === email)
+}
+
 module.exports = {
     getAllUsers,
-    getUserById
+    getUserById,
+    filterUserEmails
 }

@@ -50,6 +50,15 @@ const updateUser = (req, res) => {
     const found = getUserById(id)
 
     found.email = req.body.email
+
+    if (filterUserEmails(req.body.email)) {
+        throw new AlreadyExistsError("A user already exists with this email")
+    }
+
+    if (req.body.email === "") {
+        throw new FieldsMissing("Email field missing")
+    }
+
     res.status(200).json({
         user: found
     })
