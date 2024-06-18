@@ -41,7 +41,7 @@ const updateUser = (req, res) => {
 
     newUserInfo.id = userID
 
-    updateUserById(newUserInfo)
+    updateUserById(userID, newUserInfo)
 
     res.json({user: newUserInfo})
 }

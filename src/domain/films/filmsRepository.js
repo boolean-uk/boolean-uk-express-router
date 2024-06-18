@@ -1,4 +1,5 @@
 let { films } = require("../../../data/index.js")
+const NotFoundError = require("../../errors/notFoundError.js")
 
 function getAllFilms() {
     return films
@@ -9,14 +10,32 @@ function newFilm(film) {
 }
 
 function getFilmById(id) {
-    return films.find((film) => film.id === id)
+    const found = films.find((film) => film.id === id)
+
+    if (!found) {
+        throw new NotFoundError('A film with provided ID does not exist')
+    }
+
+    return found
 }
 
 function deleteFilmById(id) {
+    const found = films.find((film) => film.id === id)
+
+    if (!found) {
+        throw new NotFoundError('A film with provided ID does not exist')
+    }
+
     films = films.filter((film) => film.id !== id)
 }
 
-function updateFilmById(updatedFilm) {
+function updateFilmById(id, updatedFilm) {
+    const found = films.find((film) => film.id === id)
+
+    if (!found) {
+        throw new NotFoundError('A film with provided ID does not exist')
+    }
+    
     Object.assign(films, updatedFilm)
 }
 

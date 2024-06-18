@@ -41,7 +41,7 @@ const updateFilm = (req, res) => {
 
     newFilmInfo.id = filmID
 
-    updateFilmById(filmID)
+    updateFilmById(filmID, newFilmInfo)
 
     res.json({film: newFilmInfo})
 }

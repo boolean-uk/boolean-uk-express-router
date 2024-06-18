@@ -41,7 +41,7 @@ const updateBook = (req, res) => {
 
     newBookInfo.id = bookID
 
-    updateBookById(bookID)
+    updateBookById(bookID, newBookInfo)
 
     res.json({book: newBookInfo})
 }
