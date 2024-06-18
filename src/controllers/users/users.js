@@ -1,6 +1,6 @@
 const {getAllUsers, getUserById} = require('../../domain/users/users.js')
 const newID = require('../../functions/createID.js')
-const data = require('../../../data/index.js')
+const {deletedUsers} = require('../../../data/deletedUsers.js')
 
 let newUser = {
     id: 0,
@@ -9,17 +9,16 @@ let newUser = {
 
 
 const getAll = (req, res) => {
-
     res.status(200).json({
-        users: getAllUsers
+        users: getAllUsers()
     })
 }
 
 const createUser = (req, res) => {
-    newUser.id = newID(data.users)
+    newUser.id = newID(getAllUsers())
     newUser.email = req.body.email
 
-    data.users.push(newUser)
+    getAllUsers().push(newUser)
     res.status(201).json({
         user: newUser
     })
@@ -34,8 +33,21 @@ const getByID = (req, res) => {
     })
 }
 
+const removeUser = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getUserById(id)
+
+    deletedUsers.push(found)
+    const index = getAllUsers().indexOf(found)
+    getAllUsers().splice(index, 1)
+    res.status(200).json({
+        user: found
+    })
+}
+
 module.exports = {
     getAll,
     createUser,
-    getByID
+    getByID,
+    removeUser
 }
