@@ -14,4 +14,11 @@ function createFilm(req, res){
     res.status(201).json({ film })
 }
 
-module.exports = { getAllFilms, createFilm }
+
+function getFilmById(req, res){
+    const filmId = Number(req.params.id)
+    const film = films.find((film) => film.id === filmId)
+    res.status(200).json({ film })
+}
+
+module.exports = { getAllFilms, createFilm, getFilmById }
