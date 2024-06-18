@@ -21,4 +21,12 @@ function getFilmById(req, res){
     res.status(200).json({ film })
 }
 
-module.exports = { getAllFilms, createFilm, getFilmById }
+function deleteFilmById(req, res){
+    const filmId = Number(req.params.id)
+    const film = films.find((film) => film.id === filmId)
+    const index = films.indexOf(film)
+    films.splice(index, 1)
+    res.status(200).json( {film} )
+}
+
+module.exports = { getAllFilms, createFilm, getFilmById, deleteFilmById }
