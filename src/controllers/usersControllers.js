@@ -25,6 +25,9 @@ function createUser(req, res) {
 function getUserById(req, res) {
     const userId = Number(req.params.id)
     const user = users.find((user) => user.id === userId)
+    if (!user) {
+        throw new DataNotFoundError('A user with the provided ID does not exist')
+    }
     res.status(200).json({ user })
 }
 
@@ -41,8 +44,17 @@ function deleteUser(req, res) {
 
 function updateUser(req, res){
     const updatedParameters = req.body
+    if (!updatedParameters.email) {
+        throw new MissingFieldsError('Missing fields in request body')
+    }
+    if (users.find((user) => user.email === updatedParameters.email)) {
+        throw new DataAlreadyExistsError('A user with the provided email already exists')
+    }
     const userId = Number(req.params.id)
     const user = users.find((user) => user.id === userId)
+    if (!user) {
+        throw new DataNotFoundError('A user with the provided ID does not exist')
+    }
     Object.assign(user, updatedParameters)
 
     res.status(200).json({ user })

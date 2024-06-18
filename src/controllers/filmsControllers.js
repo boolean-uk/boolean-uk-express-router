@@ -1,6 +1,7 @@
 const data = require("../../data/index.js");
 const films = data.films;
 let idCounter = 5;
+const { MissingFieldsError, DataAlreadyExistsError, DataNotFoundError } = require('../errors/errors.js')
 
 function getAllFilms(req, res) {
   res.status(200).json({ films });
@@ -8,6 +9,12 @@ function getAllFilms(req, res) {
 
 function createFilm(req, res) {
   const film = req.body;
+  if (!film.title || !film.director) {
+    throw new MissingFieldsError('Missing fields in request body')
+  }
+  if (films.find((f) => f.title === film.title)) {
+    throw new DataAlreadyExistsError('A film with the provided title already exists')
+  }
   film.id = idCounter;
   films.push(film);
   idCounter++;
