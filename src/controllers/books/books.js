@@ -31,6 +31,14 @@ const getByID = (req, res) => {
     const id = Number(req.params.id)
     const found = getBookByID(id)
 
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Book not found")
+    }
+
     res.status(200).json({
         book: found
     })
@@ -39,6 +47,14 @@ const getByID = (req, res) => {
 const removeBook = (req, res) => {
     const id = Number(req.params.id)
     const found = getBookByID(id)
+
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Book not found")
+    }
 
     deletedBooks.push(found)
     const index = getAllBooks().indexOf(found)
@@ -50,18 +66,26 @@ const removeBook = (req, res) => {
 
 const updateBook = (req, res) => {
     const id = Number(req.params.id)
-    if(typeof id !== "number") {
+    if (typeof id !== "number") {
         throw new InvalidDataError("ID must be a number")
     }
 
     const found = getBookByID(id)
-    if(!found) {
+    if (!found) {
         throw new NotFoundError("Book not found")
     }
 
     found.title = req.body.title
     found.type = req.body.type
     found.author = req.body.author
+
+    if (
+        found.title === "" ||
+        found.type === "" ||
+        found.author === ""
+    ) {
+        throw new BookFieldMissing("Missing fields")
+    }
 
     const checkTitle = filterByTitle(found.title)
 
