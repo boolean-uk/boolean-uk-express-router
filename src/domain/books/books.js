@@ -10,7 +10,12 @@ const getBookByID = (id) => {
     return getAllBooks().find((b) => b.id === id)
 }
 
+const filterByTitle = (title) => {
+    return getAllBooks().find((b) => b.title === title)
+}
+
 module.exports = {
     getAllBooks,
-    getBookByID
+    getBookByID,
+    filterByTitle
 }

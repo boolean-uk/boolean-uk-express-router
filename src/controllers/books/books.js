@@ -1,4 +1,4 @@
-const { getAllBooks, getBookByID } = require("../../domain/books/books")
+const { getAllBooks, getBookByID, filterByTitle } = require("../../domain/books/books")
 const newID = require("../../functions/createID")
 const { deletedBooks } = require('../../../data/deletedData.js')
 
@@ -50,11 +50,24 @@ const removeBook = (req, res) => {
 
 const updateBook = (req, res) => {
     const id = Number(req.params.id)
+    if(typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
     const found = getBookByID(id)
+    if(!found) {
+        throw new NotFoundError("Book not found")
+    }
 
     found.title = req.body.title
     found.type = req.body.type
     found.author = req.body.author
+
+    const checkTitle = filterByTitle(found.title)
+
+    if(checkTitle) {
+        throw new BookAlreadyExistsError("Book already exists")
+    }
 
     res.status(200).json({
         book: found
