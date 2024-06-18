@@ -1,5 +1,6 @@
 const { getAllBooks, getBookByID } = require("../../domain/books/books")
 const newID = require("../../functions/createID")
+const { deletedBooks } = require('../../../data/deletedData.js')
 
 let newBook = {
     id: 0,
@@ -35,8 +36,21 @@ const getByID = (req, res) => {
     })
 }
 
+const removeBook = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getBookByID(id)
+
+    deletedBooks.push(found)
+    const index = getAllBooks().indexOf(found)
+    getAllBooks().splice(index, 1)
+    res.status(200).json({
+        book: found
+    })
+}
+
 module.exports = {
     getBooks,
     addBook,
-    getByID
+    getByID,
+    removeBook
 }
