@@ -63,6 +63,23 @@ function updateFilmById(id, updatedFilm) {
     Object.assign(films, updatedFilm)
 }
 
+function patchFilmById(id, updatedFilm) {
+    const found = films.find((film) => film.id === id)
+    const foundIndex = films.indexOf(found)
+
+    if (!found) {
+        throw new NotFoundError('A film with provided ID does not exist')
+    }
+
+    if (verifyFilm(updatedFilm)) {
+        throw new AlreadyExistsError('A film with the provided title already exists')
+    }
+
+    Object.assign(films[foundIndex], updatedFilm)
+
+    return films[foundIndex]
+}
+
 function verifyFilmProperties(object) {
     const neededProperties = ['title', 'director']
 
@@ -90,5 +107,6 @@ module.exports = {
     newFilm,
     getFilmById,
     deleteFilmById,
-    updateFilmById
+    updateFilmById,
+    patchFilmById
 }

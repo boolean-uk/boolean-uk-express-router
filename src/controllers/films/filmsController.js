@@ -1,4 +1,4 @@
-const { getAllFilms, newFilm, getFilmById, deleteFilmById, updateFilmById } = require("../../domain/films/filmsRepository")
+const { getAllFilms, newFilm, getFilmById, deleteFilmById, updateFilmById, patchFilmById } = require("../../domain/films/filmsRepository")
 
 let idCounter = 5
 
@@ -54,10 +54,22 @@ const updateFilm = (req, res) => {
     res.json({film: newFilmInfo})
 }
 
+const update = (req, res) => {
+    const newFilmInfo = req.body
+    const filmID = Number(req.params.id)
+
+    newFilmInfo.id = filmID
+
+    const patchedFilm = patchFilmById(filmID, newFilmInfo)
+
+    res.json({film: patchedFilm})
+}
+
 module.exports = {
     getAll,
     createFilm,
     findFilm,
     deleteFilm,
-    updateFilm
+    updateFilm,
+    update
 }
