@@ -18,6 +18,15 @@ const createUser = (req, res) => {
     newUser.id = newID(getAllUsers())
     newUser.email = req.body.email
 
+    if (filterUserEmails(req.body.email)) {
+        throw new AlreadyExistsError("A user already exists with this email")
+    }
+
+    if (req.body.email === "") {
+        throw new FieldsMissing("Email field missing")
+    }
+
+
     getAllUsers().push(newUser)
     res.status(201).json({
         user: newUser
@@ -64,6 +73,14 @@ const removeUser = (req, res) => {
 const updateUser = (req, res) => {
     const id = Number(req.params.id)
     const found = getUserById(id)
+
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Book not found")
+    }
 
     found.email = req.body.email
 
