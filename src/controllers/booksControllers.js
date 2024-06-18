@@ -1,6 +1,11 @@
 const data = require("../../data/index.js");
 const books = data.books;
 let idCounter = 5;
+const {
+    MissingFieldsError,
+    DataAlreadyExistsError,
+    DataNotFoundError,
+  } = require("../errors/errors.js");
 
 function getAllBooks(req, res) {
   res.status(200).json({ books });
@@ -15,6 +20,9 @@ function createBook(req, res) {
 function getBookById(req, res) {
     const bookId = Number(req.params.id)
     const book = books.find((book) => book.id === bookId)
+    if (!book) {
+        throw new DataNotFoundError('A book the provided ID does not exist')
+    }
     res.status(200).json({ book })
 }
 
