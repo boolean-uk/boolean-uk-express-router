@@ -19,6 +19,13 @@ const addFilm = (req, res) => {
     newFilm.title = req.body.title
     newFilm.director = req.body.director
 
+    if(
+        newFilm.title === "" ||
+        newFilm.director === ""
+    ) {
+        throw new FieldsMissing('Missing Fields')
+    }
+
     getAllFilms().push(newFilm)
     res.status(201).json({
         film: newFilm
@@ -28,6 +35,15 @@ const addFilm = (req, res) => {
 const getByID = (req, res) => {
     const id = Number(req.params.id)
     const found = getFilmByID(id)
+
+    if (typeof id !== "number") {
+        throw new InvalidDataError("ID must be a number")
+    }
+
+    if (!found) {
+        throw new NotFoundError("Film not found")
+    }
+
     res.status(200).json({
         film: found
     })
@@ -36,7 +52,7 @@ const getByID = (req, res) => {
 const removeFIlm = (req, res) => {
     const id = Number(req.params.id)
     const found = getFilmByID(id)
-    
+
     if (typeof id !== "number") {
         throw new InvalidDataError("ID must be a number")
     }

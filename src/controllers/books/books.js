@@ -21,6 +21,13 @@ const addBook = (req, res) => {
     newBook.type = req.body.type
     newBook.author = req.body.author
 
+    if (
+        newBook.title === "" ||
+        newBook.type === "" ||
+        newBook.author === ""
+    ) {
+        throw new FieldsMissing("Missing fields")
+    }
 
     const checkTitle = filterByTitle(found.title)
 
