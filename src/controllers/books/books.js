@@ -1,4 +1,4 @@
-const { getAllBooks } = require("../../domain/books/books")
+const { getAllBooks, getBookByID } = require("../../domain/books/books")
 const newID = require("../../functions/createID")
 
 let newBook = {
@@ -26,7 +26,17 @@ const addBook = (req, res) => {
     })
 }
 
+const getByID = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getBookByID(id)
+
+    res.status(200).json({
+        book: found
+    })
+}
+
 module.exports = {
     getBooks,
-    addBook
+    addBook,
+    getByID
 }

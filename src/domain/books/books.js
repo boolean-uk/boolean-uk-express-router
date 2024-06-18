@@ -6,6 +6,11 @@ const getAllBooks = () => {
     return books
 }
 
+const getBookByID = (id) => {
+    return getAllBooks().find((b) => b.id === id)
+}
+
 module.exports = {
-    getAllBooks
+    getAllBooks,
+    getBookByID
 }
