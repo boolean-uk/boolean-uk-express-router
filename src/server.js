@@ -21,7 +21,7 @@ app.use("/films", filmsRouter)
 app.use("/books", booksRouter)
 
 // ADD ERRORS
-const { MissingFieldsError, DataAlreadyExistsError } = require("./errors/errors.js")
+const { MissingFieldsError, DataAlreadyExistsError, DataNotFoundError } = require("./errors/errors.js")
 
 app.use((error, req, res, next) => {
     console.log(error)
@@ -35,6 +35,12 @@ app.use((error, req, res, next) => {
         return res.status(409).json({
             error: error.message
          })
+    }
+
+    if (error instanceof DataNotFoundError) {
+        return res.status(404).json({
+            error: error.message
+        })
     }
 
     res.status(500).json({

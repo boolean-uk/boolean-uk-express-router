@@ -1,7 +1,7 @@
 const data = require("../../data/index.js");
 const users = data.users;
 let idCounter = 4
-const { MissingFieldsError, DataAlreadyExistsError } = require("../errors/errors.js")
+const { MissingFieldsError, DataAlreadyExistsError, DataNotFoundError } = require("../errors/errors.js")
 
 function getAllUsers(req, res) {
   res.status(200).json({ users });
@@ -31,6 +31,9 @@ function getUserById(req, res) {
 function deleteUser(req, res) {
     const userId = Number(req.params.id)
     const user = users.find((user) => user.id === userId)
+    if (!user) {
+        throw new DataNotFoundError('A user with the provided ID does not exist')
+    }
     const index = users.indexOf(user)
     users.splice(index, 1)
     res.status(200).json({ user })
