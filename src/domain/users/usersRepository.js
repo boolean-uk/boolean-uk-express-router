@@ -16,9 +16,14 @@ function deleteUserById(id) {
     users = users.filter((user) => user.id !== id)
 }
 
+function updateUserById(updatedUser) {
+    Object.assign(users, updatedUser)
+}
+
 module.exports = {
     getAllUsers,
     newUser,
     getUserById,
-    deleteUserById
+    deleteUserById,
+    updateUserById
 }

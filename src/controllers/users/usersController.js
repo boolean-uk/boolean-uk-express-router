@@ -1,4 +1,4 @@
-const { getAllUsers, newUser, getUserById, deleteUserById } = require("../../domain/users/usersRepository")
+const { getAllUsers, newUser, getUserById, deleteUserById, updateUserById } = require("../../domain/users/usersRepository")
 
 let idCounter = 4
 
@@ -35,9 +35,21 @@ const deleteUser = (req, res) => {
     res.json({user})
 }
 
+const updateUser = (req, res) => {
+    const newUserInfo = req.body
+    const userID = Number(req.params.id)
+
+    newUserInfo.id = userID
+
+    updateUserById(newUserInfo)
+
+    res.json({user: newUserInfo})
+}
+
 module.exports = {
     getAll,
     createUser,
     findUser,
-    deleteUser
+    deleteUser,
+    updateUser
 }
