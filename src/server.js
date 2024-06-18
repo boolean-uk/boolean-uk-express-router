@@ -14,6 +14,7 @@ const usersRouter = require("./routers/users");
 const filmsRouter = require('./routers/films')
 const booksRouter = require('./routers/books');
 const NotFoundError = require("./errors/notFoundError");
+const MissingFieldsError = require("./errors/missingFieldsError");
 
 // ADD ROUTERS TO APP
 app.use('/users', usersRouter)
@@ -23,6 +24,12 @@ app.use('/books', booksRouter)
 app.use((error, req, res, next) => {
     if (error instanceof NotFoundError) {
         return res.status(404).json({
+            error: error.message
+        })
+    }
+
+    if (error instanceof MissingFieldsError) {
+        return res.status(400).json({
             error: error.message
         })
     }
