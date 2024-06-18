@@ -5,4 +5,11 @@ const getAllUsers = () => {
     return users
 }
 
-module.exports = getAllUsers()
+const getUserById = (id) => {
+    return getAllUsers().find((u) => u.id === id)
+}
+
+module.exports = {
+    getAllUsers,
+    getUserById
+}

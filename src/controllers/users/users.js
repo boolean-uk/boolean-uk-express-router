@@ -1,4 +1,4 @@
-const getAllUsers = require('../../domain/users/users.js')
+const {getAllUsers, getUserById} = require('../../domain/users/users.js')
 const newID = require('../../functions/createID.js')
 const data = require('../../../data/index.js')
 
@@ -25,7 +25,17 @@ const createUser = (req, res) => {
     })
 }
 
+const getByID = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getUserById(id)
+
+    res.status(200).json({
+        user: found
+    })
+}
+
 module.exports = {
     getAll,
-    createUser
+    createUser,
+    getByID
 }
