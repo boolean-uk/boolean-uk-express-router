@@ -5,7 +5,7 @@ const {
   getUserById,
   deleteUser,
   updateUser,
-} = require("../controllers/usersControllers")
+} = require("../../controllers/users/usersControllers.js")
 const router = express.Router()
 
 router.get("/", getUsers)

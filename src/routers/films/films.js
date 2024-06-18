@@ -6,7 +6,7 @@ const {
   deleteFilm,
   updateFilm,
   patchFilm,
-} = require("../controllers/filmsControllers")
+} = require("../../controllers/films/filmsControllers.js")
 const router = express.Router()
 
 router.get("/", getFilms)

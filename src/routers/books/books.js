@@ -6,7 +6,7 @@ const {
   updateBook,
   patchBook,
   getBooks,
-} = require("../controllers/booksControllers")
+} = require("../../controllers/books/booksControllers.js")
 const router = express.Router()
 
 router.get("/", getBooks)
