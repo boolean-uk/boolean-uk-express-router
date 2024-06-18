@@ -45,9 +45,20 @@ const removeUser = (req, res) => {
     })
 }
 
+const updateUser = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getUserById(id)
+
+    found.email = req.body.email
+    res.status(200).json({
+        user: found
+    })
+}
+
 module.exports = {
     getAll,
     createUser,
     getByID,
-    removeUser
+    removeUser,
+    updateUser
 }
