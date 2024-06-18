@@ -1,4 +1,5 @@
-const {getAllFilms} = require('../../domain/films/films.js')
+const { deletedFilms } = require('../../../data/deletedData.js')
+const {getAllFilms, getFilmByID} = require('../../domain/films/films.js')
 const newID = require('../../functions/createID.js')
 
 let newFilm = {
@@ -24,7 +25,41 @@ const addFilm = (req, res) => {
     })
 }
 
+const getByID = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getFilmByID(id)
+    res.status(200).json({
+        film: found
+    })
+}
+
+const removeFIlm = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getFilmByID(id)
+
+    deletedFilms.push(found)
+    const index = getAllFilms().indexOf(found)
+    getAllFilms().splice(index, 1)
+    res.status(200).json({
+        film: found
+    })
+}
+
+const updateFilm = (req, res) => {
+    const id = Number(req.params.id)
+    const found = getFilmByID(id)
+
+    found.title = req.body.title
+    found.director = req.body.director
+    res.status(200).json({
+        film: found
+    })
+}
+
 module.exports = {
     getAll,
-    addFilm
+    addFilm,
+    getByID,
+    removeFIlm,
+    updateFilm
 }

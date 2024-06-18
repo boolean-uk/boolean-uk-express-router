@@ -1,6 +1,6 @@
 const {getAllUsers, getUserById} = require('../../domain/users/users.js')
 const newID = require('../../functions/createID.js')
-const {deletedUsers} = require('../../../data/deletedUsers.js')
+const {deletedUsers} = require('../../../data/deletedData.js')
 
 let newUser = {
     id: 0,

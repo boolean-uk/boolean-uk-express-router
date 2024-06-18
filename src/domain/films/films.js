@@ -6,6 +6,11 @@ const getAllFilms = () => {
     return films
 }
 
+const getFilmByID = (id) => {
+    return getAllFilms().find((f) => f.id === id)
+}
+
 module.exports = {
-    getAllFilms
+    getAllFilms,
+    getFilmByID
 }
