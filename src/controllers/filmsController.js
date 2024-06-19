@@ -18,9 +18,7 @@ const createNewFilm = (req, res) => {
 	if (!newFilm.title || !newFilm.director) {
 		throw new MissingFieldsError("Missing fields in request body")
 	}
-	const existingTitle = films.find(
-		(f) => f.title === newFilm.title
-	)
+	const existingTitle = films.find((f) => f.title === newFilm.title)
 	if (existingTitle) {
 		throw new ExistingDataError(
 			"A film with the provided title already exists"
@@ -44,10 +42,10 @@ const getFilmById = (req, res) => {
 	res.status(200).json({ film: foundFilm })
 }
 
-const getFilmByDirector = (req, res) => {
-	const director = req.params.director
-	const filmsToShow = films.filter(f=>f.director === director)
-	return res.status(200).json({ films: filmsToShow })
+function getFilmByDirector(req, res) {
+	const director = req.query.director
+	const foundFilms = films.filter((f) => f.director === director)
+	res.status(200).json({ films: foundFilms })
 }
 
 const deleteFilmById = (req, res) => {
@@ -92,8 +90,6 @@ const updateFilmById = (req, res) => {
 	films.splice(filmId - 1, 1, updateFilm)
 	res.status(200).json({ film: updateFilm })
 }
-
-
 
 module.exports = {
 	getAllFilms,
