@@ -1,15 +1,17 @@
-const {all, get} = require("../contollers/books")
+const { all, get, create, update, remove } = require("../contollers/books");
 
 const express = require("express");
 const router = express.Router();
 
 router.get("/", all);
 
-router.post("/", (req, res) => {
-    res.send({ books: books });
-  });
+router.post("/", create);
 
-router.get("/:id", get)
+router.get("/:id", get);
+
+router.put("/:id", update);
+
+router.delete("/:id", remove);
 
 
-module.exports = router 
+module.exports = router;
