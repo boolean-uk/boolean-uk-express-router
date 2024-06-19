@@ -58,12 +58,6 @@ const updateBookById = (req, res) => {
 	const updateBook = req.body
 	const foundBook = books.find((b) => b.id === bookId)
 
-	if (!foundBook) {
-		throw new DataNotFoundError(
-			"A book the provided ID does not exist"
-		)
-	}
-	
 	if (
 		!updateBook.title ||
 		!updateBook.type ||
@@ -71,6 +65,13 @@ const updateBookById = (req, res) => {
 	) {
 		throw new MissingFieldsError('Missing fields in request body')
 	}
+	
+	if (!foundBook) {
+		throw new DataNotFoundError(
+			"A book the provided ID does not exist"
+		)
+	}
+
 
 	const existingTitle = books.find((b) => b.title === updateBook.title)
 	if (existingTitle) {
@@ -78,6 +79,7 @@ const updateBookById = (req, res) => {
 			"A book with the provided title already exists"
 		)
 	}
+
 	updateBook.id = bookId
 	books.splice(bookId - 1, 1, updateBook)
 	res.status(200).json({ book: updateBook })

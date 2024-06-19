@@ -9,7 +9,7 @@ const {
 	updateFilmById,
 } = require("../controllers/filmsController.js")
 
-// filmsRouter.get("/", getAllFilms)
+
 filmsRouter.get("/", (req, res) => {
 	if (req.query.director) {
 		return getFilmByDirector(req, res)
