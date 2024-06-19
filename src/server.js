@@ -14,5 +14,8 @@ const usersRouter = require("./routers/users");
 
 // ADD ROUTERS TO APP
 
+const booksRouter = require("./routers/books")
+app.use('/books', booksRouter)
+
 
 module.exports = app
