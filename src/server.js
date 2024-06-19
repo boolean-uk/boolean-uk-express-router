@@ -16,5 +16,9 @@ const usersRouter = require("./routers/users");
 const booksRouter = require("./routers/books")
 app.use('/books', booksRouter)
 
+const filmsRouter = require("./routers/films")
+app.use('/films', filmsRouter)
+
+
 
 module.exports = app
