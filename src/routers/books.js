@@ -1,13 +1,15 @@
-// Import data here...
-const { books } = require("../../data");
+const {all, get} = require("../contollers/books")
 
 const express = require("express");
 const router = express.Router();
 
+router.get("/", all);
 
-// Write routes here...
-router.get("/", (req, res) => {
+router.post("/", (req, res) => {
     res.send({ books: books });
   });
-  
-  module.exports = router 
+
+router.get("/:id", get)
+
+
+module.exports = router 
