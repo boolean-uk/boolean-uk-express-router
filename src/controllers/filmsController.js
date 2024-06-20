@@ -1,4 +1,4 @@
-const Joi = require("Joi");
+const Joi = require("joi");
 const { films } = require("../../data/index");
 
 function findFilm(req, res) {
