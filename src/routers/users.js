@@ -21,4 +21,42 @@ router.post("/", (req, res) => {
     })
 })
 
+router.get("/:id", (req, res) => {
+    const id = Number(req.params.id)
+    const user = users.find(user => user.id === id)
+    res.status(200).json({
+        user
+    })
+})
+
+router.delete("/:id", (req, res) => {
+    const id = Number(req.params.id)
+    let index
+    users.forEach((user, i) => {
+        if (user.id === id) {
+            index = i
+        }
+    })
+    const removed = users.splice(index, 1)
+    res.status(200).json({
+        user: removed[0]
+    })
+})
+
+router.put("/:id", (req, res) => {
+    const id = Number(req.params.id)
+    let index
+    users.forEach((user, i) => {
+        if (user.id === id) {
+            index = i
+        }
+    })
+    const user = req.body
+    user.id = id
+    users.splice(index, 1, user)
+    res.status(200).json({
+        user
+    })
+})
+
 module.exports = router
