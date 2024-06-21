@@ -1,5 +1,4 @@
 const {users} = require('../../data/index.js')
-// const { param } = require('../routers/users.js')
 
 const getAll = (req, res) => {
   res.status(200).json({users})
