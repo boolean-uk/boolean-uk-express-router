@@ -15,7 +15,16 @@ const createUser = (req, res) => {
 
 const getUserById = (req, res) => {
   const id = Number(req.params.id)
-  console.log(id)
+  const found = users.find(u => u.id === id)
+  console.log(found)
+  if(found === undefined){
+    return res.status(404).json({message : 'Didnt find the user!'})
+  }
+  res.status(200).json({user:found})
+}
+
+const deleteUser = (req, res)  => {
+  const id = Number(req.params.id)
   const userIndex = users.findIndex(u => u.id === id)
   if(userIndex === -1){
     return res.status(404).json({message : 'Didnt find the user!'})
@@ -24,4 +33,4 @@ const getUserById = (req, res) => {
   res.status(200).json({user : deletedUser[0]})
 }
 
-module.exports = { getAll, createUser, getUserById }
+module.exports = { getAll, createUser, getUserById, deleteUser }
