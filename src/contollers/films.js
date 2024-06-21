@@ -9,6 +9,12 @@ const all = (req, res) => {
 const get = (req, res) => {
   const id = Number(req.params.id);
   const found = films.find((film) => film.id === id);
+  if (!found) {
+    res
+      .status(404)
+      .send({ error: `A film with the provided ID ${id} does not exist` });
+    throw new NotFoundError(`A film with the provided ID ${id} does not exist`);
+  }
   res.status(200).json({ film: found });
 };
 
