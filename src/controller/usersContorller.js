@@ -33,4 +33,16 @@ const deleteUser = (req, res)  => {
   res.status(200).json({user : deletedUser[0]})
 }
 
-module.exports = { getAll, createUser, getUserById, deleteUser }
+const updateUser = (req, res) => {
+  const id = Number(req.params.id)
+  const { email } = req.body
+  const userIndex = users.findIndex(u => u.id === id)
+  if(userIndex === -1){
+    return res.status(404).json({message : 'Didnt find the user!'})
+  }
+  users[userIndex].email = email
+  res.status(200).json({user : users[userIndex]})
+}
+
+
+module.exports = { getAll, createUser, getUserById, deleteUser, updateUser }
