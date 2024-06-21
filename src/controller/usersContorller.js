@@ -5,9 +5,9 @@ const getAll = (req, res) => {
 }
 
 const createUser = (req, res) => {
-  const newUser = req.body
+  const {email} = req.body
   const id = users[users.length-1].id + 1
-  newUser.id = id
+  const newUser = {id, email}
   users.push(newUser)
   res.status(201).json({user : newUser})
 }
