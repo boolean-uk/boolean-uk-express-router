@@ -13,4 +13,15 @@ const createFilm = (req, res) => {
   res.status(201).json({film : newFilm})
 }
 
-module.exports = { getAll, createFilm  }
+const GetFilmById = (req, res) => {
+  const id = Number(req.params.id)
+  const found = films.find(f => f.id === id)
+
+  if(found === undefined) {
+    return res.status(404).json({mesasage : "Didnt find the Film!"})
+  }
+
+  res.status(200).json({film : found})
+}
+
+module.exports = { getAll, createFilm, GetFilmById  }
