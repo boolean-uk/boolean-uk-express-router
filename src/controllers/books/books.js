@@ -22,14 +22,14 @@ const addBook = (req, res) => {
     newBook.author = req.body.author
 
     if (
-        newBook.title === "" ||
-        newBook.type === "" ||
-        newBook.author === ""
+        req.body.title === "" ||
+        req.body.type === "" ||
+        req.body.author === ""
     ) {
         throw new FieldsMissing("Missing fields")
     }
 
-    const checkTitle = filterByTitle(found.title)
+    const checkTitle = filterByTitle(newBook.title)
 
     if(checkTitle) {
         throw new AlreadyExistsError("Book already exists")
@@ -80,11 +80,13 @@ const removeBook = (req, res) => {
 
 const updateBook = (req, res) => {
     const id = Number(req.params.id)
+    const found = getBookByID(id)
+
     if (typeof id !== "number") {
         throw new InvalidDataError("ID must be a number")
     }
 
-    const found = getBookByID(id)
+    
     if (!found) {
         throw new NotFoundError("Book not found")
     }
@@ -93,17 +95,9 @@ const updateBook = (req, res) => {
     found.type = req.body.type
     found.author = req.body.author
 
-    if (
-        found.title === "" ||
-        found.type === "" ||
-        found.author === ""
-    ) {
-        throw new FieldsMissing("Missing fields")
-    }
-
     const checkTitle = filterByTitle(found.title)
 
-    if(checkTitle) {
+    if(!checkTitle) {
         throw new AlreadyExistsError("Book already exists")
     }
 

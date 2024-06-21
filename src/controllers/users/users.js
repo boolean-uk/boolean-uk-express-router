@@ -1,4 +1,4 @@
-const {getAllUsers, getUserById} = require('../../domain/users/users.js')
+const {getAllUsers, getUserById, filterUserEmails} = require('../../domain/users/users.js')
 const newID = require('../../functions/createID.js')
 const {deletedUsers} = require('../../../data/deletedData.js')
 
@@ -18,7 +18,7 @@ const createUser = (req, res) => {
     newUser.id = newID(getAllUsers())
     newUser.email = req.body.email
 
-    if (filterUserEmails(req.body.email)) {
+    if (filterUserEmails(newUser.email)) {
         throw new AlreadyExistsError("A user already exists with this email")
     }
 
@@ -84,12 +84,8 @@ const updateUser = (req, res) => {
 
     found.email = req.body.email
 
-    if (filterUserEmails(req.body.email)) {
+    if (!filterUserEmails(found.email)) {
         throw new AlreadyExistsError("A user already exists with this email")
-    }
-
-    if (req.body.email === "") {
-        throw new FieldsMissing("Email field missing")
     }
 
     res.status(200).json({

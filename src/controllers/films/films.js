@@ -8,7 +8,7 @@ let newFilm = {
     director: 'string'
 }
 
-const getAll = (req, res) => {
+const getAll = async (req, res) => {
     res.status(200).json({
         films: getAllFilms()
     })
@@ -20,8 +20,8 @@ const addFilm = (req, res) => {
     newFilm.director = req.body.director
 
     if(
-        newFilm.title === "" ||
-        newFilm.director === ""
+        req.body.title === "" ||
+        req.body.director === ""
     ) {
         throw new FieldsMissing('Missing Fields')
     }
@@ -64,6 +64,7 @@ const removeFIlm = (req, res) => {
     deletedFilms.push(found)
     const index = getAllFilms().indexOf(found)
     getAllFilms().splice(index, 1)
+
     res.status(200).json({
         film: found
     })
@@ -84,7 +85,7 @@ const updateFilm = (req, res) => {
     found.title = req.body.title
     found.director = req.body.director
 
-    if (getFilmByTitle(req.body.title)) {
+    if (!getFilmByTitle(found.title)) {
         throw new AlreadyExistsError("Film already exists")
     }
 
