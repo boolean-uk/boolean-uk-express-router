@@ -16,10 +16,8 @@ const get = (req, res) => {
   const found = books.find((book) => book.id === id);
 
   if (!found) {
-    res
-      .status(404)
-      .send({ error: `Book with the provided ID ${id} does not exist` });
-    throw new NotFoundError(`Book with the provided ID ${id} does not exist`);
+    res.status(404).send({ error: "A book the provided ID does not exist" });
+    throw new NotFoundError("A book the provided ID does not exist");
   }
 
   res.status(200).json({ book: found });
@@ -28,8 +26,8 @@ const get = (req, res) => {
 const create = (req, res) => {
   const newBook = req.body;
   if (!newBook.title || !newBook.author || !newBook.type) {
-    res.status(400).send({ error: `Missing fields in the request body` });
-    throw new MissingFieldError(`Missing fields in the request body`);
+    res.status(400).send({ error: `Missing fields in request body` });
+    throw new MissingFieldError(`Missing fields in request body`);
   }
 
   if (books.find((book) => book.title === newBook.title)) {
@@ -50,23 +48,19 @@ const update = (req, res) => {
   const id = Number(req.params.id);
   const updates = req.body;
 
-  const found = books.find((book) => book.id === id);
-  if (!found) {
-    res
-      .status(404)
-      .send({ error: `Book with the provided ID ${id} does not exist` });
-    throw new NotFoundError(`Book with the provided ID ${id} does not exist`);
-  }
-
   if (!updates.title || !updates.author || !updates.type) {
-    res.status(400).send({ error: `Missing fields in the request body` });
+    res.status(400).send({ error: `Missing fields in request body` });
     throw new MissingFieldError(`Missing fields in the request body`);
   }
 
-  if (books.find((book) => book.title === newBook.title)) {
-    res
-      .status(409)
-      .send({ error: `A book with the provided title already exists` });
+  const found = books.find((book) => book.id === id);
+  if (!found) {
+    res.status(404).send({ error: `A book the provided ID does not exist` });
+    throw new NotFoundError(`A book with the provided ID does not exist`);
+  }
+
+  if (books.find((book) => book.title === updates.title)) {
+    res.status(409).send({ error: `A book with the provided title already exists` });
     throw new MissingFieldError(
       `A book with the provided title already exists`
     );
@@ -81,10 +75,8 @@ const remove = (req, res) => {
   const id = Number(req.params.id);
   const found = books.find((book) => book.id === id);
   if (!found) {
-    res
-      .status(404)
-      .send({ error: `Book with the provided ID ${id} does not exist` });
-    throw new NotFoundError(`Book with the provided ID ${id} does not exist`);
+    res.status(404).send({ error: `A book the provided ID does not exist` });
+    throw new NotFoundError(`Book with the provided ID does not exist`);
   }
 
   const index = books.indexOf(found);

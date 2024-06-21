@@ -13,5 +13,7 @@ router.put("/:id", update);
 
 router.delete("/:id", remove);
 
+router.patch("/:id", update);
+
 
 module.exports = router;
