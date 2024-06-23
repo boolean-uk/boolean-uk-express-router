@@ -29,12 +29,12 @@ router.post('/', (request, respond) => {
 
 router.put('/:id', (request, respond) => {
     const bookId = parseInt(request.params.id)
-    const { title, author } = request.body
+    const { title, author, pages,types } = request.body
     const bookIndex = books.findIndex(b => b.id === bookId);
     
     if (bookIndex !== -1) {
         // Updates the book found at bookIndex
-        books[bookIndex] = { id: bookId, title, author };
+        books[bookIndex] = { id: bookId, title, author, pages, types };
         respond.status(200).json({ book: books[bookIndex] });
     } else {
         respond.status(404).json({ error: "Book not found" });
