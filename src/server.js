@@ -7,12 +7,17 @@ const morgan = require("morgan");
 // SETUP MIDDLEWARE
 app.use(cors());
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 // REQUIRE ROUTERS
 const usersRouter = require("./routers/users");
+const booksRouter = require("./routers/books")
+const filmsRouter = require("./routers/films")
+
 
 // ADD ROUTERS TO APP
-
+app.use("/users", usersRouter)
+app.use("/films", filmsRouter)
+app.use("/books", booksRouter)
 
 module.exports = app

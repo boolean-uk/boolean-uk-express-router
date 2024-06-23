@@ -7,7 +7,7 @@ describe("Films Endpoint", () => {
     app = require("../../../src/server.js")
   })
   describe("GET /films", () => {
-    it("will list all films", async () => {
+    it("will list all films", async () => { //done
       const response = await supertest(app).get("/films")
 
       expect(response.status).toEqual(200)
@@ -15,7 +15,7 @@ describe("Films Endpoint", () => {
       expect(response.body.films.length).toEqual(4)
     })
 
-    it("will list a film", async () => {
+    it("will list a film", async () => { //done
       const response = await supertest(app).get("/films/1")
 
       expect(response.status).toEqual(200)
@@ -28,7 +28,7 @@ describe("Films Endpoint", () => {
 
   describe("POST /films", () => {
 
-    it("will create a new film", async () => {
+    it("will create a new film", async () => { //done
       const response = await supertest(app).post("/films").send(film1)
 
       expect(response.status).toEqual(201)
@@ -42,7 +42,7 @@ describe("Films Endpoint", () => {
   })
 
   describe("PUT /films", () => {
-    it("will update a film", async () => {
+    it("will update a film", async () => { //done
       const response = await supertest(app).put("/films/1").send(film2)
 
       expect(response.status).toEqual(200)
@@ -53,7 +53,7 @@ describe("Films Endpoint", () => {
     })
   })
 
-  describe("DELETE /films", () => {
+  describe("DELETE /films", () => { //done
     it("will return the deleted the film", async () => {
       const response = await supertest(app).delete("/films/1")
 
