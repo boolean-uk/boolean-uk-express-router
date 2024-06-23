@@ -22,19 +22,20 @@ router.get('/:id', (request, respond) => {
 })
 
 router.post('/', (request, respond) => {
-    const newBook = {id: books.length +1, ...request.body}
+    const newBook = {id: books.length + 1, ...request.body}
     books.push(newBook)
     respond.status(201).json({ book: newBook })
 })
 
 router.put('/:id', (request, respond) => {
     const bookId = parseInt(request.params.id)
-    const { title, author, pages, types } = request.body
-    const bookIndex = books.findIndex(b => b.id === bookId)
+    const updatedBook = request.body
+
+    const bookIndex = books.findIndex(book => book.id === bookId)
 
     if (bookIndex !== -1) {
         // Update the book found at bookIndex
-        books[bookIndex] = { id: bookId, title, author, pages, types }
+        books[bookIndex] = { id: bookId, ...updatedBook }
         respond.status(200).json({ book: books[bookIndex] })
     } else {
         respond.status(404).json({ error: "Book not found" })
