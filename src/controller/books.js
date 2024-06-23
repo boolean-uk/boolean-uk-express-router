@@ -1,4 +1,4 @@
-const books = require('../../data/index')
+const { books: books } = require('../../data/index')
 
 const getAllBooks = (req, res) => {
     res.status(200).json({
@@ -7,4 +7,4 @@ const getAllBooks = (req, res) => {
 }
 
 
-module.exports = getAllBooks
+module.exports = { getAllBooks }
