@@ -17,7 +17,7 @@ router.get('/:id', (request, respond) => {
 })
 
 router.post('/', (request, respond) => {
-    const newFilm = {id: films.length ++, ...request.body}
+    const newFilm = {id: films.length +1, ...request.body}
     films.push(newFilm)
     respond.status(201).json({film: newFilm} )
 })

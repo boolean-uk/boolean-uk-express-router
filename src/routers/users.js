@@ -12,12 +12,12 @@ router.get('/:id', (request, respond) => {
     if (user) {
         respond.status(200).json({ user })
     } else {
-        respond.status(400).json({ error: 'user not found' })
+        respond.status(404).json({ error: 'user not found' })
     }
 })
 
 router.post('/', (request, respond) => {
-    const newUser = {id: users.length ++, ...request.body}
+    const newUser = {id: users.length +1, ...request.body}
     users.push(newUser)
     respond.status(201).json({ user: newUser })
 })
@@ -32,7 +32,7 @@ router.put('/:id', (request, respond) => {
         users[userIndex] = {id: userId, email}
         respond.status(200).json({ user: users[userIndex] })
     } else {
-        respond.status(400).json({ error: 'User not found' })
+        respond.status(404).json({ error: 'User not found' })
     }
 }) 
 
@@ -42,7 +42,7 @@ router.delete('/:id', (request, respond) => {
         const deletedUser = users.splice(userIndex, 1)[0]
         respond.status(200).json({ user: deletedUser })
     } else {
-        respond.status(400).json({ error: 'User not found' })
+        respond.status(404).json({ error: 'User not found' })
     }
 })
 
