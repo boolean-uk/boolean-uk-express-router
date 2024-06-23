@@ -16,7 +16,7 @@ const filmsRouter = require("./routers/films")
 
 
 // ADD ROUTERS TO APP
-//app.use("/users", usersRouter)
+app.use("/users", usersRouter)
 app.use("/films", filmsRouter)
 app.use("/books", booksRouter)
 

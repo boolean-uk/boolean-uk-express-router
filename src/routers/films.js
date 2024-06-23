@@ -1,5 +1,3 @@
-
-
 const express = require('express')
 const router = express.Router()
 const { films } = require('../../data')
@@ -40,7 +38,7 @@ router.put('/:id', (request, respond) => {
 
 router.delete('/:id', (request, respond) => {
     const filmIndex = films.findIndex(b => b.id === parseInt(request.params.id)) 
-    if (filmIndex ==! -1) {
+    if (filmIndex !== -1) {
         const deletedFilm = films.splice(filmIndex, 1)[0]
         respond.status(200).json({ film: deletedFilm })
     } else  {

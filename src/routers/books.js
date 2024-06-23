@@ -43,13 +43,15 @@ router.put('/:id', (request, respond) => {
 
 router.delete("/:id", (request, respond) => {
     const bookIndex = books.findIndex(b => b.id === parseInt(request.params.id)) 
-    if (bookIndex ==! -1) {
+    if (bookIndex !== -1) {
         const deletedBook = books.splice(bookIndex, 1)[0]
         respond.status(200).json({ book: deletedBook })
     } else  {
         respond.status(404).json({ error: 'Book not found'})
     }
 })
+
+
 
 
 
