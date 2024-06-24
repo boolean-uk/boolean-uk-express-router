@@ -30,4 +30,21 @@ const getFilmsById = (req, res) => {
     })
 }
 
-module.exports = { getAllFilms, postFilms, getFilmsById }
+const deleteFilmById = (req, res) => {
+    const id = Number(req.params.id)
+  
+    const filmFound = films.find((c) => c.id === id)
+    const filmIndex = films.indexOf(filmFound)
+    films.splice(filmIndex, 1)
+    return res.status(200).json({ film: filmFound })
+}
+
+const updateFilmById = (req, res) => {
+	const filmId = Number(req.params.id)
+	const updatedFilm = req.body
+	updatedFilm.id = filmId
+	films.splice(filmId - 1, 1, updatedFilm)
+	res.status(200).json({ 'film': updatedFilm })
+}
+
+module.exports = { getAllFilms, postFilms, getFilmsById, deleteFilmById, updateFilmById }
