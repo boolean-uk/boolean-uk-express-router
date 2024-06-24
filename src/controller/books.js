@@ -1,5 +1,5 @@
-const { books: books } = require('../../data/index')
-const { book1, book2 } = require('../../test/fixtures/userData.js')
+const { books: books } = require('../../data/index.js')
+const { book1, book2 } = require('../../test/fixtures/bookData.js')
 
 const getAllBooks = (req, res) => {
     res.status(200).json({
@@ -7,9 +7,8 @@ const getAllBooks = (req, res) => {
     })
 }
 
-
+let id = books.length + 1
 const postBooks = (req,res) => {
-    let id = books.length + 1
     const book = book1
     book.id = id
     books.push(book)
