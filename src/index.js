@@ -1,6 +1,6 @@
 /* REQUIRE APP */
-const app = require('./server.js')
-const port = 3030;
+const app = require("./server.js");
+const port = 3031;
 
 /* START SERVER */
 app.listen(port, () => {

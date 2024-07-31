@@ -4,71 +4,71 @@ const books = [
     title: "1984",
     type: "fiction",
     author: "George Orwell",
-    pages: 5
+    pages: 5,
   },
   {
     id: 2,
     title: "Life of Pi",
     type: "fiction",
     author: "Yann Martel",
-    pages: 4
+    pages: 4,
   },
   {
     id: 3,
     title: "How to Win Friends and Influence People",
     type: "non-fiction",
     author: "Dale Carnegie",
-    pages: 3
+    pages: 3,
   },
   {
     id: 4,
     title: "The Lean Startup",
     type: "non-fiction",
     author: "Eric Reis",
-    pages: 2
-  }
+    pages: 2,
+  },
 ];
 
 const films = [
   {
     id: 1,
     title: "Bonnie and Clyde",
-    director: "Arthur Penn"
+    director: "Arthur Penn",
   },
   {
     id: 2,
     title: "Reservoir Dogs",
-    director: "Quentin Tarantino"
+    director: "Quentin Tarantino",
   },
   {
     id: 3,
     title: "Inception",
-    director: "Christopher Nolan"
+    director: "Christopher Nolan",
   },
   {
     id: 4,
     title: "Django Unchained",
-    director: "Quentin Tarantino"
-  }
+    director: "Quentin Tarantino",
+  },
 ];
 
 const users = [
   {
     id: 1,
-    email: "edward@mail.com"
+    email: "edward@mail.com",
   },
   {
     id: 2,
-    email: "nathan@mail.com"
+    email: "nathan@mail.com",
   },
   {
     id: 3,
-    email: "mike@mail.com"
-  }
+    email: "mike@mail.com",
+  },
 ];
 
 module.exports = {
   books: books,
   films: films,
-  users: users
-}
+  users: users,
+};
