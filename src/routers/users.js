@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
     newUserId += 1;
     newUser.id = newUserId;
     users.push(newUser);
-    res.status(201).json({ newUser });
+    res.status(201).json({ user : newUser });
   }
 });
 
@@ -54,6 +54,7 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const updatedUser = req.body;
   const id = Number(req.params.id);
+  updatedUser.id = id;
 
    if (!updatedUser.email) {
      return res.status(400).json({ error: "Missing fields in request body" });
@@ -72,8 +73,6 @@ router.put("/:id", (req, res) => {
   } 
 
   const existingUserIndex = users.findIndex((user) => user.id === id);
-
-  updatedUser.id = id;
 
   users.splice(existingUserIndex, 1, updatedUser);
 

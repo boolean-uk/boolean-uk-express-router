@@ -27,13 +27,14 @@ router.post("/", (req, res) => {
     res
       .status(409)
       .json({ error: "A film with the provided title already exists" });
-  } else {
+  } 
+
     newFilmId += 1;
     newFilm.id = newFilmId;
 
     films.push(newFilm);
-    res.status(201).json({ newFilm });
-  }
+    res.status(201).json({ film: newFilm });
+  
 });
 
 router.get("/:id", (req, res) => {

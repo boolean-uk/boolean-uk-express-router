@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
     newBookId += 1;
     newBook.id = newBookId;
     books.push(newBook);
-    res.status(201).json({ newBook });
+    res.status(201).json({ book: newBook });
   }
 });
 
