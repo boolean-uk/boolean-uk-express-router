@@ -8,16 +8,23 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", function (req, res) {
-  const { title, type, author, pages } = req.body;
-  if (!title || !type || !author || !pages) {
-    return res.status(400);
+  const { title, type, author } = req.body;
+  if (!title || !type || !author) {
+    return res.status(400).json({ error: "error" });
   }
   const currentHighId = books.reduce((max, obj) => {
     return obj.id > max ? obj.id : max;
   }, 0);
-  req.body.id = currentHighId + 1;
-  books.push(req.body);
-  res.status(201).json({ book: req.body });
+  const newBook = {
+    id: currentHighId + 1,
+    title,
+    type,
+    author,
+    pages,
+  };
+  console.log(req.body);
+  books.push(newBook);
+  res.status(201).json({ book: newBook });
 });
 
 router.get("/:id", function (req, res) {
