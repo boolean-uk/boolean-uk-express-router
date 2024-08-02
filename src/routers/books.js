@@ -20,7 +20,6 @@ router.post("/", function (req, res) {
     title,
     type,
     author,
-    pages,
   };
   console.log(req.body);
   books.push(newBook);
