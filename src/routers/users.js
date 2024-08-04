@@ -25,6 +25,12 @@ function missingFieldsErr(res) {
   });
 }
 
+function alreadyExistsErr(res) {
+  return res.status(409).json({
+    error: "A user with the provided email already exists",
+  });
+}
+
 //GET ROUTES
 
 router.get("/", (req, res) => {
@@ -46,6 +52,8 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
   if (!req.body.email) {
     missingFieldsErr(res);
+  } else if (users.find((user) => user.email == req.body.email)) {
+    alreadyExistsErr(res);
   } else {
     const newUser = { id: nextUserId, ...req.body };
     users.push(newUser);
@@ -74,7 +82,11 @@ router.delete("/:id", (req, res) => {
 router.put("/:id", (req, res) => {
   const foundUser = getUserById(req.params.id);
 
-  if (foundUser) {
+  if (!foundUser) {
+    noUserErr(res);
+  } else if (users.find((user) => user.email == req.body.email)) {
+    alreadyExistsErr(res);
+  } else {
     let theUser = (users[users.indexOf(foundUser)] = {
       id: foundUser.id,
       ...req.body,
@@ -82,8 +94,6 @@ router.put("/:id", (req, res) => {
     res.json({
       user: theUser,
     });
-  } else {
-    noUserErr(res);
   }
 });
 
